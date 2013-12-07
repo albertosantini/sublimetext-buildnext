@@ -21,9 +21,8 @@ Notes
 If you need to execute the build when you save the file I recommend
 [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild) plugin.
 
-
-The build system should contain a regex for filename, line, column and message
-error.
+The build system should contain the `file_regex` property for the filename,
+line, column and message field.
 
 For instance, a JSHint build setting
 ```
