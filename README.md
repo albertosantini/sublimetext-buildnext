@@ -1,12 +1,13 @@
-sublimetext-buildnext
-=====================
+Build Next
+==========
 
-Build Next is a Sublime Text plugin to improve the default build system.
+**Build Next** is a [Sublime Text](http://www.sublimetext.com/) plugin to improve the default build system.
 
 Features
 --------
 
-- Extend Default.exec plugin.
+- Extend Default.exec plugin and no external dependencies.
+- Zero user preferences.
 - Close build results view if there are not errors.
 - Show a dot icon in the gutter area close to the error.
 - Draw an horizontal region close to the column (tabs-aware) of the error.
@@ -15,16 +16,25 @@ Features
 - Wrap around the end of the document for the next (previous) result.
 - The output panel content is refreshed on the next (previous) result command.
 
+Installation
+------------
+
+After installing the plugin with [Sublime Package Manager](http://wbond.net/sublime_packages/package_control), you should to add the following user key bindings (`Preferences / Key Bindings - User`) to engage it:
+
+```
+...
+    { "keys": ["f4"], "command": "goto_next_error" },
+    { "keys": ["shift+f4"], "command": "goto_prev_error" },
+...
+```
+
 Notes
 -----
 
-If you need to execute the build when you save the file I recommend
-[SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild) plugin.
-
-The build system should contain the `file_regex` property for the filename,
+- The build system should contain the `file_regex` property for the filename,
 line, column and message field.
 
-For instance, a JSHint build setting
+For instance, a JSHint build setting (`JSHint.sublime-build`):
 ```
 {
     "selector": "source.js, source.json",
@@ -42,11 +52,8 @@ For instance, a JSHint build setting
 
 ```
 
-You need to add the following user key bindings to engage the plugin:
-```
-...
-    { "keys": ["f4"], "command": "goto_next_error" },
-    { "keys": ["shift+f4"], "command": "goto_prev_error" },
-...
-```
+- I recommend [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild) plugin, if you need to execute the build when you save the file.
+
+
+
 
