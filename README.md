@@ -22,11 +22,15 @@ Installation
 After installing the plugin with [Sublime Package Manager](http://wbond.net/sublime_packages/package_control), you should to add the following user key bindings (`Preferences / Key Bindings - User`) to engage it:
 
 ```
+[
 ...
     { "keys": ["f4"], "command": "goto_next_error" },
     { "keys": ["shift+f4"], "command": "goto_prev_error" },
 ...
+]
 ```
+
+This configuration overrides the default key bindings `next_result` and `prev_result`.
 
 Notes
 -----
@@ -51,6 +55,7 @@ For instance, a JSHint build setting (`JSHint.sublime-build`):
 }
 
 ```
+
 
 - I recommend [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild) plugin, if you need to execute the build when you save the file.
 
