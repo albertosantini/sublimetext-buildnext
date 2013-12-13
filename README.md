@@ -35,10 +35,8 @@ This configuration overrides the default key bindings `next_result` and `prev_re
 Notes
 -----
 
-- The build system should contain the `file_regex` property for the filename,
-line, column and message field.
+The build system should contain the `file_regex` property for the filename, line, column and message field. For instance, a JSHint build setting (`JSHint.sublime-build`):
 
-For instance, a JSHint build setting (`JSHint.sublime-build`):
 ```
 {
     "selector": "source.js, source.json",
@@ -56,8 +54,7 @@ For instance, a JSHint build setting (`JSHint.sublime-build`):
 
 ```
 
-
-- I recommend [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild) plugin, if you need to execute the build when you save the file.
+I recommend [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild) plugin, if you need to execute the build when you save the file.
 
 
 
