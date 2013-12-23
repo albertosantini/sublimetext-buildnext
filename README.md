@@ -19,7 +19,7 @@ Features
 Installation
 ------------
 
-After installing the plugin with [Sublime Package Manager](http://wbond.net/sublime_packages/package_control), you should to add the following user key bindings (`Preferences / Key Bindings - User`) to engage it:
+After installing the plugin with [Sublime Package Manager](http://wbond.net/sublime_packages/package_control), you should add the following user key bindings (`Preferences / Key Bindings - User`) to engage it:
 
 ```
 [
