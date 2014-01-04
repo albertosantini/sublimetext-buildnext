@@ -95,10 +95,13 @@ class GotoError(sublime_plugin.TextCommand):
         global output_errors
 
         key = sublime.active_window().active_view().file_name()
+        if (not key):
+            return
+
         key.replace("\\","/")
 
         if (key not in output_errors):
-            return;
+            return
 
         output_view = output_errors[key]["view"]
         output_text = output_errors[key]["view_text"]
