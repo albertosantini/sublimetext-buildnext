@@ -10,3 +10,7 @@ install:
 script:
   - flake8 . --max-line-length=80
   - pep257 . --ignore=D202
+
+notifications:
+  email: false
+
