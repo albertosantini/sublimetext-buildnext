@@ -1,6 +1,4 @@
-"""
-This package augments the default build system.
-"""
+"""This package augments the default build system."""
 
 import sublime
 import sublime_plugin
@@ -13,14 +11,11 @@ output_errors = {}
 
 
 class ExecCommand(defaultExec.ExecCommand):
-    """
-    This class extends the default build system.
-    """
+
+    """This class extends the default build system."""
 
     def on_finished(self, proc):
-        """
-        It is the entry point after the process is finished.
-        """
+        """It is the entry point after the process is finished."""
 
         global output_errors
 
@@ -54,9 +49,7 @@ class ExecCommand(defaultExec.ExecCommand):
             )
 
     def getAdjustedRegion(self, line, col):
-        """
-        It adjust the line and column values if the view contains tabs.
-        """
+        """It adjust the line and column values if the view contains tabs."""
 
         line = int(line) - 1
         view = self.window.active_view()
@@ -75,9 +68,7 @@ class ExecCommand(defaultExec.ExecCommand):
         return sublime.Region(text_point, text_point)
 
     def getErrors(self, view):
-        """
-        It parse the output of the build system to get the errors.
-        """
+        """It parse the output of the build system to get the errors."""
 
         view_errors = {
             "view": view,
@@ -91,7 +82,7 @@ class ExecCommand(defaultExec.ExecCommand):
         if (file_regex == ""):
             return view_errors
 
-        column_adjust = view.settings().get("build_column_adjust", "0")
+        column_adjust = 0;
 
         errors = []
         output_regions = view.find_all(file_regex)
@@ -115,14 +106,11 @@ class ExecCommand(defaultExec.ExecCommand):
 
 
 class ReplaceTextOutputView(sublime_plugin.TextCommand):
-    """
-    It replaces the text in the output view.
-    """
+
+    """It replaces the text in the output view."""
 
     def run(self, edit, args):
-        """
-        Run the text command.
-        """
+        """Run the text command."""
 
         self.view.replace(
             edit,
@@ -132,14 +120,11 @@ class ReplaceTextOutputView(sublime_plugin.TextCommand):
 
 
 class GotoError(sublime_plugin.TextCommand):
-    """
-    It is the helper class to go to the error.
-    """
+
+    """It is the helper class to go to the error."""
 
     def run(self, edit, direction):
-        """
-        Run the text command.
-        """
+        """Run the text command."""
 
         global output_errors
 
@@ -190,27 +175,21 @@ class GotoError(sublime_plugin.TextCommand):
             )
 
     def updateEditAndOutputView(self, view, region, message, output):
-        """
-        It updated the edit and output view.
-        """
+        """It updated the edit and output view."""
 
         self.highlightBuildError(view, output)
         sublime.status_message(message)
         self.setCaret(self.view, region)
 
     def setCaret(self, view, position):
-        """
-        It sets the caret.
-        """
+        """It sets the caret."""
 
         view.sel().clear()
         view.sel().add(sublime.Region(position.begin(), position.end()))
         view.show_at_center(position.end())
 
     def highlightBuildError(self, view, position):
-        """
-        It highlights the line error in the output view.
-        """
+        """It highlights the line error in the output view."""
 
         self.setCaret(view, position)
         sublime.active_window().run_command("hide_panel", {"cancel": True})
@@ -221,26 +200,20 @@ class GotoError(sublime_plugin.TextCommand):
 
 
 class GotoNextError(GotoError):
-    """
-    It maps the key binding to go to the next error.
-    """
+
+    """It maps the key binding to go to the next error."""
 
     def run(self, edit):
-        """
-        Run the text command.
-        """
+        """Run the text command."""
 
         super(GotoNextError, self).run(edit, "next")
 
 
 class GotoPrevError(GotoError):
-    """
-    It maps the key binding to go to the previous error.
-    """
+
+    """It maps the key binding to go to the previous error."""
 
     def run(self, edit):
-        """
-        Run the text command.
-        """
+        """Run the text command."""
 
         super(GotoPrevError, self).run(edit, "prev")
