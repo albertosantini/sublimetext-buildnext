@@ -43,9 +43,9 @@ class ExecCommand(defaultExec.ExecCommand):
                 "keyword",
                 "dot",
                 sublime.DRAW_EMPTY_AS_OVERWRITE |
-                    sublime.DRAW_NO_FILL |
-                    sublime.DRAW_NO_OUTLINE |
-                    sublime.HIDE_ON_MINIMAP
+                sublime.DRAW_NO_FILL |
+                sublime.DRAW_NO_OUTLINE |
+                sublime.HIDE_ON_MINIMAP
             )
 
     def getAdjustedRegion(self, line, col):
@@ -82,7 +82,7 @@ class ExecCommand(defaultExec.ExecCommand):
         if (file_regex == ""):
             return view_errors
 
-        column_adjust = 0;
+        column_adjust = 0
 
         errors = []
         output_regions = view.find_all(file_regex)
@@ -146,8 +146,14 @@ class GotoError(sublime_plugin.TextCommand):
         if (len(error_regions) == 0):
             return
 
-        output_view.run_command("replace_text_output_view",
-            {"args": {"text": output_text}})
+        output_view.run_command(
+            "replace_text_output_view",
+            {
+                "args": {
+                    "text": output_text
+                }
+            }
+        )
 
         if (direction == "prev"):
             error_regions = [x for x in reversed(error_regions)]
@@ -157,8 +163,8 @@ class GotoError(sublime_plugin.TextCommand):
         caret = self.view.sel()[0].begin()
         for i, err_region in enumerate(error_regions):
             err_region_end = err_region.end()
-            if ((direction == "next" and (caret < err_region_end)) or
-                (direction == "prev" and (caret > err_region_end))):
+            if ((direction == "next" and (caret < err_region_end))
+                    or (direction == "prev" and (caret > err_region_end))):
                 self.updateEditAndOutputView(
                     output_view,
                     error_regions[i],
