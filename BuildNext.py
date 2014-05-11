@@ -65,6 +65,8 @@ class ExecCommand(defaultExec.ExecCommand):
         if (file_regex == ""):
             return view_errors
 
+        column_adjust = view.settings().get("build_column_adjust", "0")
+
         errors = []
         output_regions = view.find_all(file_regex)
         for output_region in output_regions:
@@ -72,7 +74,7 @@ class ExecCommand(defaultExec.ExecCommand):
             error = re.findall(file_regex, buf)[0]
             # filename = error[0]
             line = error[1]
-            column = error[2]
+            column = int(error[2]) + int(column_adjust)
             error_message = error[3]
             error_region = self.getAdjustedRegion(line, column)
             errors.append((error_region, error_message, output_region))
