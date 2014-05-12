@@ -1,7 +1,7 @@
 1.1.0 / 2014-05-15
 ==================
 
-* Added preferences per build system file (see issue #1).
+* Added preferences per build system file (see [issue #1](https://github.com/albertosantini/sublimetext-buildnext/issues/1)).
 
 1.0.2 / 2014-05-11
 ==================

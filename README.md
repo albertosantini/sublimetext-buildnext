@@ -8,7 +8,7 @@ Features
 --------
 
 - Extend Default.exec plugin and no external dependencies.
-- Zero user preferences (or preferences per build system).
+- Zero user preferences and preferences per build system.
 - Close build results view if there are not errors.
 - Show a dot icon in the gutter area close to the error.
 - Draw an horizontal region close to the column (tabs-aware) of the error.
