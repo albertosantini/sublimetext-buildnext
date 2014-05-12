@@ -8,7 +8,7 @@ Features
 --------
 
 - Extend Default.exec plugin and no external dependencies.
-- Zero user preferences.
+- Zero user preferences (or preferences per build system).
 - Close build results view if there are not errors.
 - Show a dot icon in the gutter area close to the error.
 - Draw an horizontal region close to the column (tabs-aware) of the error.
@@ -20,7 +20,9 @@ Features
 Installation
 ------------
 
-After installing the plugin with [Sublime Package Manager](http://wbond.net/sublime_packages/package_control), you should add the following user key bindings (`Preferences / Key Bindings - User`) to engage it:
+After installing the plugin with [Sublime Package Manager](http://wbond.net/sublime_packages/package_control),
+you should add the following user key bindings (`Preferences / Key Bindings - User`)
+to engage it:
 
 ```
 [
@@ -31,12 +33,44 @@ After installing the plugin with [Sublime Package Manager](http://wbond.net/subl
 ]
 ```
 
-This configuration overrides the default key bindings `next_result` and `prev_result`.
+This configuration overrides the default key bindings `next_result` and
+`prev_result`.
+
+Preferences
+-----------
+
+There are not user preferences, but there are preference per build system file.
+The preferences are embedded in the build file, contained in the `env` property.
+
+There are use cases where the following preferences are useful, like displaying
+the output after the unit test command or adjusting the cerror column, because
+the build command is zero based column.
+
+
+- `ST_BUILD_SHOW_OUTPUTVIEW` (default false): to display always the Build
+Results panel, even if there are not error and the build command exit code is
+zero.
+
+- `ST_BUILD_ADJUST_COLUMNERROR` (default 0): to adjust the column of the error
+adding a value.
+
+```
+
+For instance,
+...
+    "env":
+    {
+        "ST_BUILD_SHOW_OUTPUTVIEW": "true"
+    }
+...
+```
 
 Notes
 -----
 
-The build system should contain the `file_regex` property for the filename, line, column and message field. For instance, a JSHint build setting (`JSHint.sublime-build`):
+The build system should contain the `file_regex` property for the filename,
+line, column and message field. For instance, a JSHint build setting
+(`JSHint.sublime-build`):
 
 ```
 {
@@ -55,7 +89,8 @@ The build system should contain the `file_regex` property for the filename, line
 
 ```
 
-I recommend [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild) plugin, if you need to execute the build when you save the file.
+I recommend [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild)
+plugin, if you need to execute the build when you save the file.
 
 
 
