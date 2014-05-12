@@ -28,10 +28,10 @@ class ExecCommand(defaultExec.ExecCommand):
         self.env.update(env)
 
         super(ExecCommand, self).run(cmd, shell_cmd,
-                                    file_regex, line_regex,
-                                    working_dir, encoding, env,
-                                    quiet, kill, word_wrap, syntax,
-                                    **kwargs)
+                                     file_regex, line_regex,
+                                     working_dir, encoding, env,
+                                     quiet, kill, word_wrap, syntax,
+                                     **kwargs)
 
     def on_finished(self, proc):
         """It is the entry point after the process is finished."""
