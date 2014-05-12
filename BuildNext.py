@@ -14,6 +14,24 @@ class ExecCommand(defaultExec.ExecCommand):
 
     """This class extends the default build system."""
 
+    def run(self, cmd = None, shell_cmd = None,
+            file_regex = "", line_regex = "", working_dir = "",
+            encoding = "utf-8", env = {}, quiet = False, kill = False,
+            word_wrap = True, syntax = "Packages/Text/Plain text.tmLanguage",
+            # Catches "path" and "shell"
+            **kwargs):
+
+        self.env = {}
+        self.env["ST_BUILD_SHOW_OUTPUTVIEW"] = "false"
+        self.env["ST_BUILD_ADJUST_COLUMNERROR"] = "0"
+        self.env.update(env)
+
+        super(ExecCommand, self).run(cmd, shell_cmd,
+                                        file_regex, line_regex,
+                                        working_dir, encoding, env,
+                                        quiet, kill, word_wrap, syntax,
+                                        **kwargs)
+
     def on_finished(self, proc):
         """It is the entry point after the process is finished."""
 
@@ -28,7 +46,13 @@ class ExecCommand(defaultExec.ExecCommand):
         key.replace("\\", "/")
 
         if (len(output_view.find_all_results()) == 0 and proc.exit_code() == 0):
-            sublime.active_window().run_command("hide_panel", {"cancel": True})
+            if (self.env["ST_BUILD_SHOW_OUTPUTVIEW"] == "false"):
+                sublime.active_window().run_command(
+                    "hide_panel",
+                    {
+                        "cancel": True
+                    }
+                )
             view.erase_regions("exec_errors")
             if (key in output_errors):
                 del output_errors[key]
@@ -82,7 +106,7 @@ class ExecCommand(defaultExec.ExecCommand):
         if (file_regex == ""):
             return view_errors
 
-        column_adjust = 0
+        adjust_column = int(self.env["ST_BUILD_ADJUST_COLUMNERROR"])
 
         errors = []
         output_regions = view.find_all(file_regex)
@@ -91,7 +115,7 @@ class ExecCommand(defaultExec.ExecCommand):
             error = re.findall(file_regex, buf)[0]
             # filename = error[0]
             line = error[1]
-            column = int(error[2]) + int(column_adjust)
+            column = int(error[2]) + int(adjust_column)
             error_message = error[3]
             error_region = self.getAdjustedRegion(line, column)
             errors.append((error_region, error_message, output_region))
