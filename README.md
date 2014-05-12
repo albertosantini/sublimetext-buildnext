@@ -43,7 +43,7 @@ There are not user preferences, but there are preference per build system file.
 The preferences are embedded in the build file, contained in the `env` property.
 
 There are use cases where the following preferences are useful, like displaying
-the output after the unit test command or adjusting the cerror column, because
+the output after the unit test command or adjusting the error column, because
 the build command is zero based column.
 
 
