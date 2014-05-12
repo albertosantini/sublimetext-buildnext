@@ -14,12 +14,13 @@ class ExecCommand(defaultExec.ExecCommand):
 
     """This class extends the default build system."""
 
-    def run(self, cmd = None, shell_cmd = None,
-            file_regex = "", line_regex = "", working_dir = "",
-            encoding = "utf-8", env = {}, quiet = False, kill = False,
-            word_wrap = True, syntax = "Packages/Text/Plain text.tmLanguage",
+    def run(self, cmd=None, shell_cmd=None,
+            file_regex="", line_regex="", working_dir="",
+            encoding="utf-8", env={}, quiet=False, kill=False,
+            word_wrap=True, syntax="Packages/Text/Plain text.tmLanguage",
             # Catches "path" and "shell"
             **kwargs):
+        """Run the text command."""
 
         self.env = {}
         self.env["ST_BUILD_SHOW_OUTPUTVIEW"] = "false"
@@ -27,10 +28,10 @@ class ExecCommand(defaultExec.ExecCommand):
         self.env.update(env)
 
         super(ExecCommand, self).run(cmd, shell_cmd,
-                                        file_regex, line_regex,
-                                        working_dir, encoding, env,
-                                        quiet, kill, word_wrap, syntax,
-                                        **kwargs)
+                                    file_regex, line_regex,
+                                    working_dir, encoding, env,
+                                    quiet, kill, word_wrap, syntax,
+                                    **kwargs)
 
     def on_finished(self, proc):
         """It is the entry point after the process is finished."""
