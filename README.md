@@ -39,7 +39,7 @@ This configuration overrides the default key bindings `next_result` and
 Preferences
 -----------
 
-There are not user preferences, but there are preference per build system file.
+There are not user preferences, but there are preferences per build system file.
 The preferences are embedded in the build file, contained in the `env` property.
 
 There are use cases where the following preferences are useful, like displaying
@@ -54,9 +54,9 @@ zero.
 - `ST_BUILD_ADJUST_COLUMNERROR` (default 0): to adjust the column of the error
 adding a value.
 
+For instance,
 ```
 
-For instance,
 ...
     "env":
     {
