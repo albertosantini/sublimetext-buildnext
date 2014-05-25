@@ -63,10 +63,10 @@ For instance,
         "ST_BUILD_SHOW_OUTPUTVIEW": "true"
     }
 ...
+```
 
 - `ST_BUILD_PUT_PRIORITY` (default ""): to put priority on errors containing a
 token.
-```
 
 Notes
 -----
