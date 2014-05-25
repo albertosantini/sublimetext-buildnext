@@ -25,6 +25,7 @@ class ExecCommand(defaultExec.ExecCommand):
         self.env = {}
         self.env["ST_BUILD_SHOW_OUTPUTVIEW"] = "false"
         self.env["ST_BUILD_ADJUST_COLUMNERROR"] = "0"
+        self.env["ST_BUILD_PUT_PRIORITY"] = ""
         self.env.update(env)
 
         super(ExecCommand, self).run(cmd, shell_cmd,
@@ -43,7 +44,13 @@ class ExecCommand(defaultExec.ExecCommand):
         view = self.window.active_view()
         output_view = self.output_view
 
-        key = sublime.active_window().active_view().file_name()
+        active_view = sublime.active_window().active_view()
+
+        if hasattr(active_view, "file_name"):
+            key = active_view.file_name()
+        else:
+            return
+
         key.replace("\\", "/")
 
         if (len(output_view.find_all_results()) == 0 and proc.exit_code() == 0):
@@ -74,7 +81,7 @@ class ExecCommand(defaultExec.ExecCommand):
             )
 
     def getAdjustedRegion(self, line, col):
-        """It adjust the line and column values if the view contains tabs."""
+        """It adjusts the line and column values if the view contains tabs."""
 
         line = int(line) - 1
         view = self.window.active_view()
@@ -92,8 +99,22 @@ class ExecCommand(defaultExec.ExecCommand):
 
         return sublime.Region(text_point, text_point)
 
+    def putPriority(self, errors):
+        """It puts priority on line errors containing a token."""
+
+        priority = self.env["ST_BUILD_PUT_PRIORITY"]
+        if priority == "":
+            return sorted(errors)
+        else:
+            errors_with_priority = sorted(list(filter(
+                lambda error: error[1].lower().find(priority) != -1, errors)))
+            errors_other = sorted(list(filter(
+                lambda error: error[1].lower().find(priority) == -1, errors)))
+
+            return errors_with_priority + errors_other
+
     def getErrors(self, view):
-        """It parse the output of the build system to get the errors."""
+        """It parses the output of the build system to get the errors."""
 
         view_errors = {
             "view": view,
@@ -121,7 +142,7 @@ class ExecCommand(defaultExec.ExecCommand):
             error_region = self.getAdjustedRegion(line, column)
             errors.append((error_region, error_message, output_region))
 
-        errors = sorted(errors)
+        errors = self.putPriority(errors)
         for i, error in enumerate(errors):
             view_errors["error_regions"].append(errors[i][0])
             view_errors["error_messages"].append(errors[i][1])
@@ -180,33 +201,38 @@ class GotoError(sublime_plugin.TextCommand):
             }
         )
 
-        if (direction == "prev"):
-            error_regions = [x for x in reversed(error_regions)]
-            error_messages = [x for x in reversed(error_messages)]
-            output_regions = [x for x in reversed(output_regions)]
-
         caret = self.view.sel()[0].begin()
-        for i, err_region in enumerate(error_regions):
-            err_region_end = err_region.end()
-            if ((direction == "next" and (caret < err_region_end))
-                    or (direction == "prev" and (caret > err_region_end))):
-                self.updateEditAndOutputView(
-                    output_view,
-                    error_regions[i],
-                    error_messages[i],
-                    output_regions[i]
-                )
-                break
-        else:
-            self.updateEditAndOutputView(
-                output_view,
-                error_regions[0],
-                error_messages[0],
-                output_regions[0]
-            )
+        distances = []
+        for i, region in enumerate(error_regions):
+            distance = region.end() - caret
+            distances.append((distance, i))
+
+        if direction == "next":
+            results = sorted(list(filter(
+                lambda x: x[0] > 0, distances)), key=lambda x: x[1])
+            if results:
+                distance, index = results[0]
+            else:
+                index = 0
+
+        if direction == "prev":
+            results = sorted(list(filter(
+                lambda x: x[0] < 0, distances)), key=lambda x: x[1],
+                reverse=True)
+            if results:
+                distance, index = results[0]
+            else:
+                index = len(error_messages) - 1
+
+        self.updateEditAndOutputView(
+            output_view,
+            error_regions[index],
+            error_messages[index],
+            output_regions[index]
+        )
 
     def updateEditAndOutputView(self, view, region, message, output):
-        """It updated the edit and output view."""
+        """It updates the edit and output view."""
 
         self.highlightBuildError(view, output)
         sublime.status_message(message)

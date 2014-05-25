@@ -1,7 +1,19 @@
+1.2.0 / 2014-05-25
+==================
+
+* Added preference per build system file:
+    * `ST_BUILD_PUT_PRIORITY`
+
+See [issue #2](https://github.com/albertosantini/sublimetext-buildnext/issues/2) for the details.
+
 1.1.0 / 2014-05-15
 ==================
 
-* Added preferences per build system file (see [issue #1](https://github.com/albertosantini/sublimetext-buildnext/issues/1)).
+* Added preferences per build system file:
+    * `ST_BUILD_SHOW_OUTPUTVIEW`
+    * `ST_BUILD_ADJUST_COLUMNERROR`
+
+See [issue #1](https://github.com/albertosantini/sublimetext-buildnext/issues/1) for the details.
 
 1.0.2 / 2014-05-11
 ==================
