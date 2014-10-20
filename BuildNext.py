@@ -44,14 +44,10 @@ class ExecCommand(defaultExec.ExecCommand):
         view = self.window.active_view()
         output_view = self.output_view
 
-        active_view = sublime.active_window().active_view()
-
-        if hasattr(active_view, "file_name"):
-            key = active_view.file_name()
+        if hasattr(view, "file_name"):
+            key = view.file_name()
         else:
             return
-
-        key.replace("\\", "/")
 
         if (len(output_view.find_all_results()) == 0 and proc.exit_code() == 0):
             if (self.env["ST_BUILD_SHOW_OUTPUTVIEW"] == "false"):
@@ -68,7 +64,10 @@ class ExecCommand(defaultExec.ExecCommand):
         else:
             output_errors[key] = self.getErrors(output_view)
 
-            regions = output_errors[key]["error_regions"]
+            error_files = output_errors[key]["error_files"]
+            indexes = [i for i, x in enumerate(error_files) if x == key]
+
+            regions = [output_errors[key]["error_regions"][i] for i in indexes]
             view.add_regions(
                 "exec_errors",
                 regions,
@@ -121,7 +120,8 @@ class ExecCommand(defaultExec.ExecCommand):
             "view_text": view.substr(sublime.Region(0, view.size())),
             "error_regions": [],
             "error_messages": [],
-            "output_regions": []
+            "output_regions": [],
+            "error_files": []
         }
 
         file_regex = str(view.settings().get("result_file_regex"))
@@ -135,18 +135,20 @@ class ExecCommand(defaultExec.ExecCommand):
         for output_region in output_regions:
             buf = str(view.substr(output_region))
             error = re.findall(file_regex, buf)[0]
-            # filename = error[0]
+            filename = error[0]
             line = error[1]
             column = int(error[2]) + int(adjust_column)
             error_message = error[3]
             error_region = self.getAdjustedRegion(line, column)
-            errors.append((error_region, error_message, output_region))
+            errors.append((error_region, error_message, output_region,
+                           filename))
 
         errors = self.putPriority(errors)
         for i, error in enumerate(errors):
             view_errors["error_regions"].append(errors[i][0])
             view_errors["error_messages"].append(errors[i][1])
             view_errors["output_regions"].append(errors[i][2])
+            view_errors["error_files"].append(errors[i][3])
 
         return view_errors
 
@@ -178,19 +180,19 @@ class GotoError(sublime_plugin.TextCommand):
         if (not key):
             return
 
-        key.replace("\\", "/")
-
-        if (key not in output_errors):
+        indexes = [i for i, x in enumerate(output_errors[key]["error_files"])
+                   if x == key]
+        if (len(indexes) == 0):
             return
 
         output_view = output_errors[key]["view"]
         output_text = output_errors[key]["view_text"]
-        error_regions = output_errors[key]["error_regions"]
-        error_messages = output_errors[key]["error_messages"]
-        output_regions = output_errors[key]["output_regions"]
-
-        if (len(error_regions) == 0):
-            return
+        error_regions = [output_errors[key]["error_regions"][i]
+                         for i in indexes]
+        error_messages = [output_errors[key]["error_messages"][i]
+                          for i in indexes]
+        output_regions = [output_errors[key]["output_regions"][i]
+                          for i in indexes]
 
         output_view.run_command(
             "replace_text_output_view",
