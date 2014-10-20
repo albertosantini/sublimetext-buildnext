@@ -1,3 +1,10 @@
+1.3.0 / 2014-10-20
+==================
+
+* Fix for switching the view when there are multiple errors on different files.
+
+See [issue #4](https://github.com/albertosantini/sublimetext-buildnext/issues/4) for the details.
+
 1.2.0 / 2014-05-25
 ==================
 
