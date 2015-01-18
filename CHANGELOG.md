@@ -1,3 +1,10 @@
+1.3.1 / 2015-01-18
+==================
+
+* Fix handling build system with multi files.
+
+See [issue #7](https://github.com/albertosantini/sublimetext-buildnext/issues/7) for the details.
+
 1.3.0 / 2014-10-20
 ==================
 
