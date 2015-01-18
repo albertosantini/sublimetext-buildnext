@@ -55,8 +55,8 @@ zero.
 adding a value.
 
 For instance,
-```
 
+```
 ...
     "env":
     {
@@ -89,12 +89,7 @@ line, column and message field. For instance, a JSHint build setting
         "cmd": ["jshint.cmd", "$file"]
     }
 }
-
 ```
 
 I recommend [SublimeOnSaveBuild](https://github.com/alexnj/SublimeOnSaveBuild)
 plugin, if you need to execute the build when you save the file.
-
-
-
-
