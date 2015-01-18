@@ -65,7 +65,7 @@ class ExecCommand(defaultExec.ExecCommand):
             output_errors[key] = self.getErrors(output_view)
 
             error_files = output_errors[key]["error_files"]
-            indexes = [i for i, x in enumerate(error_files) if x == key]
+            indexes = [i for i, x in enumerate(error_files) if key.find(x) >= 0]
 
             regions = [output_errors[key]["error_regions"][i] for i in indexes]
             view.add_regions(
