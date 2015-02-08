@@ -251,6 +251,10 @@ class GotoError(sublime_plugin.TextCommand):
 
         self.setCaret(view, position)
 
+        window = sublime.active_window()
+        window.run_command("hide_panel", {"panel": "output.exec"})
+        window.run_command("show_panel", {"panel": "output.exec"})
+
 
 class GotoNextError(GotoError):
 
