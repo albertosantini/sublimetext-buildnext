@@ -1,3 +1,9 @@
+1.3.3 / 2015-02-08
+==================
+
+* Fix exit code None and output.exec test.
+* Fix showing output panel when switching view.
+
 1.3.2 / 2015-02-08
 ==================
 
