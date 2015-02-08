@@ -52,7 +52,7 @@ class ExecCommand(defaultExec.ExecCommand):
         exit_code = proc.exit_code()
         errors_len = len(output_view.find_all_results())
 
-        if (exit_code == None or exit_code == 0 or errors_len == 0):
+        if (exit_code is None or exit_code == 0 or errors_len == 0):
             if (self.env["ST_BUILD_SHOW_OUTPUTVIEW"] == "false"):
                 self.window.run_command("hide_panel", {"panel": "output.exec"})
 
