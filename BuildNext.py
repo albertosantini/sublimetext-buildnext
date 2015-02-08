@@ -49,14 +49,13 @@ class ExecCommand(defaultExec.ExecCommand):
         else:
             return
 
-        if (len(output_view.find_all_results()) == 0 and proc.exit_code() == 0):
+        exit_code = proc.exit_code()
+        errors_len = len(output_view.find_all_results())
+
+        if (exit_code == None or exit_code == 0 or errors_len == 0):
             if (self.env["ST_BUILD_SHOW_OUTPUTVIEW"] == "false"):
-                sublime.active_window().run_command(
-                    "hide_panel",
-                    {
-                        "cancel": True
-                    }
-                )
+                self.window.run_command("hide_panel", {"panel": "output.exec"})
+
             view.erase_regions("exec_errors")
             if (key in output_errors):
                 del output_errors[key]
@@ -251,11 +250,6 @@ class GotoError(sublime_plugin.TextCommand):
         """It highlights the line error in the output view."""
 
         self.setCaret(view, position)
-        sublime.active_window().run_command("hide_panel", {"cancel": True})
-        sublime.active_window().run_command(
-            "show_panel",
-            {"panel": "output.exec"}
-        )
 
 
 class GotoNextError(GotoError):
