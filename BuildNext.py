@@ -11,7 +11,6 @@ output_errors = {}
 
 
 class ExecCommand(defaultExec.ExecCommand):
-
     """This class extends the default build system."""
 
     def run(self, cmd=None, shell_cmd=None,
@@ -153,7 +152,6 @@ class ExecCommand(defaultExec.ExecCommand):
 
 
 class ReplaceTextOutputView(sublime_plugin.TextCommand):
-
     """It replaces the text in the output view."""
 
     def run(self, edit, args):
@@ -167,7 +165,6 @@ class ReplaceTextOutputView(sublime_plugin.TextCommand):
 
 
 class GotoError(sublime_plugin.TextCommand):
-
     """It is the helper class to go to the error."""
 
     def run(self, edit, direction):
@@ -257,7 +254,6 @@ class GotoError(sublime_plugin.TextCommand):
 
 
 class GotoNextError(GotoError):
-
     """It maps the key binding to go to the next error."""
 
     def run(self, edit):
@@ -267,7 +263,6 @@ class GotoNextError(GotoError):
 
 
 class GotoPrevError(GotoError):
-
     """It maps the key binding to go to the previous error."""
 
     def run(self, edit):
