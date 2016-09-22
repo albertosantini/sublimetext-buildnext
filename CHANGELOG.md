@@ -1,3 +1,8 @@
+1.4.0 / 2016-09-22
+==================
+
+* Fix ExecCommand.run signature due to new SublimeText beta 3124.
+
 1.3.3 / 2015-02-08
 ==================
 
