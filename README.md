@@ -17,6 +17,11 @@ Features
 - Wrap around the end of the document for the next (previous) result.
 - The output panel content is refreshed on the next (previous) result command.
 
+Requirements
+------------
+
+At least Sublime Text 3 Build 3124.
+
 Installation
 ------------
 
