@@ -17,6 +17,7 @@ class ExecCommand(defaultExec.ExecCommand):
     def run(self, cmd=None, shell_cmd=None,
             file_regex="", line_regex="", working_dir="",
             encoding="utf-8", env={}, quiet=False, kill=False,
+            update_phantoms_only=False, hide_phantoms_only=False,
             word_wrap=True, syntax="Packages/Text/Plain text.tmLanguage",
             # Catches "path" and "shell"
             **kwargs):
@@ -30,8 +31,9 @@ class ExecCommand(defaultExec.ExecCommand):
 
         super(ExecCommand, self).run(cmd, shell_cmd,
                                      file_regex, line_regex,
-                                     working_dir, encoding, env,
-                                     quiet, kill, word_wrap, syntax,
+                                     working_dir, encoding, env, quiet, kill,
+                                     update_phantoms_only, hide_phantoms_only,
+                                     word_wrap, syntax,
                                      **kwargs)
 
     def on_finished(self, proc):
