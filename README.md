@@ -1,6 +1,6 @@
 Build Next
 ==========
-[![Build Status](https://travis-ci.org/albertosantini/sublimetext-buildnext.png)](https://travis-ci.org/albertosantini/sublimetext-buildnext)
+![](https://github.com/albertosantini/sublimetext-buildnext/workflows/CI/badge.svg)
 
 **Build Next** is a [Sublime Text](http://www.sublimetext.com/) plugin to improve the default build system.
 
